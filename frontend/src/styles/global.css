@@ -1,0 +1,20 @@
+body {
+  background-color: #f8fafc;
+  font-family: "Segoe UI", sans-serif;
+}
+
+h3, h4 {
+  font-weight: 600;
+}
+
+.table {
+  background: white;
+}
+
+input, select {
+  border-radius: 8px !important;
+}
+
+button {
+  border-radius: 8px !important;
+}
