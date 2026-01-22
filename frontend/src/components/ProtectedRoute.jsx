@@ -1,10 +1,14 @@
 import { Navigate } from "react-router-dom";
-import { isAuthenticated } from "../services/auth";
 
 function ProtectedRoute({ children }) {
-  if (!isAuthenticated()) {
+  const token = localStorage.getItem("access");
+
+  // ❌ Not logged in
+  if (!token) {
     return <Navigate to="/login" replace />;
   }
+
+  // ✅ Logged in
   return children;
 }
 
