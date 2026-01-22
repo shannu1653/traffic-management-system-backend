@@ -1,11 +1,13 @@
 import axios from "axios";
-import { logout } from "../utils/auth";
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL,
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
 
-// Request interceptor
+// Attach JWT token
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem("access");
   if (token) {
@@ -13,17 +15,5 @@ api.interceptors.request.use((config) => {
   }
   return config;
 });
-
-// Response interceptor (token expired)
-api.interceptors.response.use(
-  (response) => response,
-  (error) => {
-    if (error.response && error.response.status === 401) {
-      logout();
-      window.location.href = "/login";
-    }
-    return Promise.reject(error);
-  }
-);
 
 export default api;

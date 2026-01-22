@@ -9,18 +9,15 @@ from datetime import timedelta
 
 load_dotenv()
 
-# ======================
+# ======================================================
 # BASE
-# ======================
+# ======================================================
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# ======================
+# ======================================================
 # SECURITY
-# ======================
-SECRET_KEY = os.getenv(
-    "SECRET_KEY",
-    "django-insecure-dev-key"
-)
+# ======================================================
+SECRET_KEY = os.getenv("SECRET_KEY", "django-insecure-dev-key")
 
 DEBUG = False
 
@@ -33,9 +30,9 @@ ALLOWED_HOSTS = [
 
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
-# ======================
+# ======================================================
 # APPLICATIONS
-# ======================
+# ======================================================
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -53,11 +50,11 @@ INSTALLED_APPS = [
     "analytics",
 ]
 
-# ======================
+# ======================================================
 # MIDDLEWARE
-# ======================
+# ======================================================
 MIDDLEWARE = [
-    "corsheaders.middleware.CorsMiddleware",   # MUST be first
+    "corsheaders.middleware.CorsMiddleware",  # MUST be first
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -68,18 +65,15 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-# ======================
-# CORS (FIXED)
-# ======================
+# ======================================================
+# CORS (IMPORTANT – FIXED)
+# ======================================================
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
 
-# ⚠️ DO NOT override CORS_ALLOW_HEADERS
-# Let django-cors-headers handle defaults
-
-# ======================
-# CSRF (FIXED – SINGLE BLOCK)
-# ======================
+# ======================================================
+# CSRF (IMPORTANT – FIXED)
+# ======================================================
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:5173",
     "https://*.vercel.app",
@@ -88,9 +82,9 @@ CSRF_TRUSTED_ORIGINS = [
 
 APPEND_SLASH = True
 
-# ======================
+# ======================================================
 # URLS / TEMPLATES
-# ======================
+# ======================================================
 ROOT_URLCONF = "config.urls"
 
 TEMPLATES = [
@@ -110,9 +104,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "config.wsgi.application"
 
-# ======================
-# DATABASE (MySQL / Aiven / Render)
-# ======================
+# ======================================================
+# DATABASE (MySQL – Aiven / Render)
+# ======================================================
 RENDER = os.getenv("RENDER", "false").lower() == "true"
 
 DATABASES = {
@@ -134,9 +128,9 @@ if RENDER:
         }
     }
 
-# ======================
+# ======================================================
 # AUTH
-# ======================
+# ======================================================
 AUTH_USER_MODEL = "accounts.User"
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -146,9 +140,9 @@ AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
 ]
 
-# ======================
-# REST FRAMEWORK + JWT
-# ======================
+# ======================================================
+# DJANGO REST + JWT
+# ======================================================
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
@@ -164,25 +158,25 @@ SIMPLE_JWT = {
     "AUTH_HEADER_TYPES": ("Bearer",),
 }
 
-# ======================
+# ======================================================
 # INTERNATIONALIZATION
-# ======================
+# ======================================================
 LANGUAGE_CODE = "en-us"
 TIME_ZONE = "UTC"
 USE_I18N = True
 USE_TZ = True
 
-# ======================
+# ======================================================
 # STATIC FILES
-# ======================
+# ======================================================
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
-# ======================
+# ======================================================
 # EMAIL (OPTIONAL)
-# ======================
+# ======================================================
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 587
@@ -190,7 +184,7 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
 
-# ======================
-# DEFAULT PRIMARY KEY
-# ======================
+# ======================================================
+# DEFAULT PK
+# ======================================================
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"

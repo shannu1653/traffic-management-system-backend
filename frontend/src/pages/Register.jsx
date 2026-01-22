@@ -16,12 +16,12 @@ function Register() {
     setError("");
 
     try {
-      await api.post("/accounts/register/", {
-        username,
-        email,
-        password,
-        role: "user",
-      });
+      await api.post("/api/accounts/register/", {
+  username,
+  email,
+  password,
+  role: "user",
+});
 
       navigate("/login");
     } catch (err) {
