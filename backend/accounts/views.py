@@ -5,6 +5,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status,permissions
 from .serializers import RegisterSerializer
+from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 class RegisterView(APIView):
     permission_classes = [permissions.AllowAny]
@@ -32,3 +34,18 @@ class ProfileView(APIView):
             "email": user.email,
             "role": user.role
         })
+
+class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
+    def validate(self, attrs):
+        data = super().validate(attrs)
+
+        # Add custom data
+        data["username"] = self.user.username
+        data["role"] = self.user.role  # admin / officer / user
+
+        return data
+
+
+class LoginView(TokenObtainPairView):
+    permission_classes = [permissions.AllowAny]
+    serializer_class = CustomTokenObtainPairSerializer
