@@ -27,9 +27,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-cpr5rnziylxxhetmdcj@u1-5-um6ono!$@a@1k^7cz+^rn-04_'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv("DEBUG") == "True"
+DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+
+ALLOWED_HOSTS = [
+    "traffic-management-backend.onrender.com",
+    "localhost",
+    "127.0.0.1",
+]
+
 
 
 # Application definition
@@ -65,9 +71,8 @@ MIDDLEWARE = [
 ]
 
 
-CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOWED_ORIGINS = [
-    "https://your-frontend.vercel.app",
+    "https://traffic-management-system-backend.vercel.app",
 ]
 
 
