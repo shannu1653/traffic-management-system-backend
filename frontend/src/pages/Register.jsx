@@ -16,7 +16,7 @@ function Register() {
     setError("");
 
     try {
-      await api.post("/api/accounts/register/", {
+      await api.post("/accounts/register/", {
         username,
         email,
         password,
@@ -25,13 +25,16 @@ function Register() {
 
       navigate("/login");
     } catch (err) {
-  console.log(err.response?.data);
-  setError("Registration failed");
-}
+      console.error(err.response?.data);
+      setError("Registration failed");
+    }
   };
 
   return (
-    <Container className="d-flex justify-content-center align-items-center" style={{ minHeight: "80vh" }}>
+    <Container
+      className="d-flex justify-content-center align-items-center"
+      style={{ minHeight: "80vh" }}
+    >
       <Card style={{ width: "420px" }} className="shadow-lg p-3">
         <h3 className="text-center mb-3">Register</h3>
 
@@ -40,17 +43,31 @@ function Register() {
         <Form onSubmit={handleRegister}>
           <Form.Group className="mb-3">
             <Form.Label>Username</Form.Label>
-            <Form.Control value={username} onChange={(e) => setUsername(e.target.value)} required />
+            <Form.Control
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+            />
           </Form.Group>
 
           <Form.Group className="mb-3">
             <Form.Label>Email</Form.Label>
-            <Form.Control type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+            <Form.Control
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
           </Form.Group>
 
           <Form.Group className="mb-3">
             <Form.Label>Password</Form.Label>
-            <Form.Control type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+            <Form.Control
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
           </Form.Group>
 
           <Button variant="dark" type="submit" className="w-100">

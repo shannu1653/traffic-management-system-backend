@@ -14,7 +14,7 @@ function Login() {
     setError("");
 
     try {
-      const res = await api.post("/api/accounts/login/", {
+      const res = await api.post("/accounts/login/", {
         username,
         password,
       });
