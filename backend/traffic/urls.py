@@ -1,7 +1,11 @@
+from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .views import TrafficViewSet
+from .views import TrafficViewSet, TrafficStatsView
 
 router = DefaultRouter()
-router.register("traffic", TrafficViewSet)
+router.register("", TrafficViewSet, basename="traffic")
 
-urlpatterns = router.urls
+urlpatterns = [
+    path("stats/", TrafficStatsView.as_view(), name="traffic-stats"),
+    path("", include(router.urls)),
+]

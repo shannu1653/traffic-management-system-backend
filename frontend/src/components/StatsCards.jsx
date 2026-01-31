@@ -1,44 +1,58 @@
-import { Card, Row, Col } from "react-bootstrap";
+import {
+  FaCar,
+  FaTrafficLight,
+  FaExclamationTriangle,
+  FaChartLine,
+} from "react-icons/fa";
 
-function StatsCards({ stats }) {
+function StatsCards({ stats, loading }) {
+  // ✅ Proper loading state
+  if (loading) {
+    return (
+      <div className="officer-stats">
+        <div className="officer-card">Loading...</div>
+        <div className="officer-card">Loading...</div>
+        <div className="officer-card">Loading...</div>
+        <div className="officer-card">Loading...</div>
+      </div>
+    );
+  }
+
+  const cards = [
+    {
+      title: "Total Vehicles",
+      value: stats?.total_vehicles ?? "--",
+      icon: <FaCar />,
+    },
+    {
+      title: "Active Signals",
+      value: stats?.active_signals ?? "--",
+      icon: <FaTrafficLight />,
+    },
+    {
+      title: "Incidents",
+      value: stats?.incidents ?? "--",
+      icon: <FaExclamationTriangle />,
+    },
+    {
+      title: "Violations",
+      value: stats?.violations ?? "--",
+      icon: <FaChartLine />,
+    },
+  ];
+
   return (
-    <Row className="mb-4">
-      <Col md={3}>
-        <Card className="shadow-sm">
-          <Card.Body>
-            <h6>Total Traffic</h6>
-            <h3>{stats.traffic.total_records}</h3>
-          </Card.Body>
-        </Card>
-      </Col>
-
-      <Col md={3}>
-        <Card className="shadow-sm">
-          <Card.Body>
-            <h6>High Congestion</h6>
-            <h3>{stats.traffic.high_congestion}</h3>
-          </Card.Body>
-        </Card>
-      </Col>
-
-      <Col md={3}>
-        <Card className="shadow-sm">
-          <Card.Body>
-            <h6>Incidents</h6>
-            <h3>{stats.incidents.total}</h3>
-          </Card.Body>
-        </Card>
-      </Col>
-
-      <Col md={3}>
-        <Card className="shadow-sm">
-          <Card.Body>
-            <h6>Violations</h6>
-            <h3>{stats.violations.total}</h3>
-          </Card.Body>
-        </Card>
-      </Col>
-    </Row>
+    <div className="officer-stats">
+      {cards.map((card, i) => (
+        <div className="officer-card" key={i}>
+          {card.icon}
+          <h4>{card.title}</h4>
+          <p style={{ fontSize: "20px", fontWeight: "600" }}>
+            {card.value}
+          </p>
+        </div>
+      ))}
+    </div>
   );
 }
 

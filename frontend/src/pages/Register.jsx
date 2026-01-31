@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { Container, Card, Form, Button, Alert } from "react-bootstrap";
-import api from "../services/api";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import { motion } from "framer-motion";
+import { register } from "../services/auth"; // ✅ CORRECT IMPORT
+import "../styles/auth.css";
 
 function Register() {
   const navigate = useNavigate();
@@ -9,73 +10,79 @@ function Register() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
   const handleRegister = async (e) => {
     e.preventDefault();
     setError("");
+    setLoading(true);
 
     try {
-      await api.post("/api/accounts/register/", {
-  username,
-  email,
-  password,
-  role: "user",
-});
+      await register({
+        username,
+        email,
+        password,
+      });
 
+      // ✅ success → go to login
       navigate("/login");
     } catch (err) {
-      console.error(err.response?.data);
+      console.error(err);
       setError("Registration failed");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <Container
-      className="d-flex justify-content-center align-items-center"
-      style={{ minHeight: "80vh" }}
-    >
-      <Card style={{ width: "420px" }} className="shadow-lg p-3">
-        <h3 className="text-center mb-3">Register</h3>
+    <div className="auth-wrapper">
+      <motion.div
+        className="auth-card"
+        initial={{ opacity: 0, y: 40 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+      >
+        <h2>Register</h2>
 
-        {error && <Alert variant="danger">{error}</Alert>}
+        {error && <div className="auth-error">{error}</div>}
 
-        <Form onSubmit={handleRegister}>
-          <Form.Group className="mb-3">
-            <Form.Label>Username</Form.Label>
-            <Form.Control
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              required
-            />
-          </Form.Group>
+        <form onSubmit={handleRegister}>
+          <input
+            type="text"
+            placeholder="Username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            required
+          />
 
-          <Form.Group className="mb-3">
-            <Form.Label>Email</Form.Label>
-            <Form.Control
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </Form.Group>
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
 
-          <Form.Group className="mb-3">
-            <Form.Label>Password</Form.Label>
-            <Form.Control
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </Form.Group>
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
 
-          <Button variant="dark" type="submit" className="w-100">
-            Register
-          </Button>
-        </Form>
-      </Card>
-    </Container>
+          <button type="submit" disabled={loading}>
+            {loading ? "Registering..." : "Register"}
+          </button>
+        </form>
+
+        <p className="auth-footer">
+          Already have an account?{" "}
+          <Link to="/login">Login</Link>
+        </p>
+      </motion.div>
+    </div>
   );
 }
 

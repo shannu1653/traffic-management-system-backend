@@ -19,7 +19,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # ======================================================
 SECRET_KEY = os.getenv("SECRET_KEY", "django-insecure-dev-key")
 
-DEBUG = False
+DEBUG = os.getenv("DEBUG", "false").lower() == "true"
+
 
 ALLOWED_HOSTS = [
     "traffic-management-backend-f148.onrender.com",
@@ -48,6 +49,7 @@ INSTALLED_APPS = [
     "traffic",
     "incidents",
     "analytics",
+    "channels",
 ]
 
 # ======================================================
@@ -148,9 +150,10 @@ REST_FRAMEWORK = {
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
     "DEFAULT_PERMISSION_CLASSES": (
-        "rest_framework.permissions.AllowAny",
+        "rest_framework.permissions.IsAuthenticated",
     ),
 }
+
 
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
@@ -188,3 +191,33 @@ EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
 # DEFAULT PK
 # ======================================================
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# ======================================================
+# ASGI + CHANNELS (WEBSOCKET)
+# ======================================================
+
+ASGI_APPLICATION = "config.asgi.application"
+
+
+REDIS_URL = os.getenv("REDIS_URL")
+
+if REDIS_URL:
+    # ✅ Render / Production
+    CHANNEL_LAYERS = {
+        "default": {
+            "BACKEND": "channels_redis.core.RedisChannelLayer",
+            "CONFIG": {
+                "hosts": [REDIS_URL],
+            },
+        },
+    }
+else:
+    # ✅ Localhost
+    CHANNEL_LAYERS = {
+        "default": {
+            "BACKEND": "channels_redis.core.RedisChannelLayer",
+            "CONFIG": {
+                "hosts": [("127.0.0.1", 6379)],
+            },
+        },
+    }

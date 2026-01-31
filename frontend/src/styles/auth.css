@@ -1,0 +1,100 @@
+/* ===============================
+   AUTH PAGES (LOGIN / REGISTER)
+================================ */
+
+.auth-wrapper {
+  min-height: calc(100vh - 70px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: radial-gradient(
+    circle at top,
+    #2563eb,
+    #020617
+  );
+  padding: 20px;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 380px;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 32px;
+  border-radius: 18px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
+}
+
+.auth-card h2 {
+  text-align: center;
+  font-size: 26px;
+  font-weight: 700;
+}
+
+.auth-subtitle {
+  text-align: center;
+  font-size: 14px;
+  margin-bottom: 22px;
+  color: #6b7280;
+}
+
+.auth-card form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.auth-card input {
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #d1d5db;
+  font-size: 14px;
+}
+
+.auth-card input:focus {
+  outline: none;
+  border-color: #2563eb;
+}
+
+.auth-card button {
+  margin-top: 6px;
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  background: linear-gradient(135deg, #2563eb, #4f46e5);
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.auth-card button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(37, 99, 235, 0.45);
+}
+
+.auth-card button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.auth-error {
+  background: #fee2e2;
+  color: #991b1b;
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 13px;
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.auth-footer {
+  text-align: center;
+  margin-top: 18px;
+  font-size: 14px;
+}
+
+.auth-footer a {
+  color: #2563eb;
+  font-weight: 600;
+  text-decoration: none;
+}

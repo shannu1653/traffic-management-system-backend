@@ -1,39 +1,44 @@
 import {
-  Chart as ChartJS,
-  BarElement,
-  CategoryScale,
-  LinearScale,
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
   Tooltip,
-  Legend
-} from "chart.js";
-import { Bar } from "react-chartjs-2";
-
-ChartJS.register(
-  BarElement,
-  CategoryScale,
-  LinearScale,
-  Tooltip,
-  Legend
-);
+  ResponsiveContainer,
+} from "recharts";
 
 function TrafficChart({ stats }) {
-  const data = {
-    labels: ["Traffic Records", "High Congestion", "Incidents", "Violations"],
-    datasets: [
-      {
-        label: "City Traffic Analytics",
-        data: [
-          stats.traffic.total_records,
-          stats.traffic.high_congestion,
-          stats.incidents.total,
-          stats.violations.total
-        ],
-        backgroundColor: "#2563eb"
-      }
-    ]
-  };
+  // ✅ Guard: stats not ready yet
+  if (!stats || !stats.traffic_flow) {
+    return (
+      <div className="dashboard-section">
+        <h3>Traffic Flow</h3>
+        <p className="text-muted">Loading traffic data...</p>
+      </div>
+    );
+  }
 
-  return <Bar data={data} />;
+  const data = stats.traffic_flow;
+
+  return (
+    <div className="dashboard-section">
+      <h3>Traffic Flow</h3>
+
+      <ResponsiveContainer width="100%" height={260}>
+        <LineChart data={data}>
+          <XAxis dataKey="time" />
+          <YAxis />
+          <Tooltip />
+          <Line
+            type="monotone"
+            dataKey="count"
+            stroke="#4f46e5"
+            strokeWidth={3}
+          />
+        </LineChart>
+      </ResponsiveContainer>
+    </div>
+  );
 }
 
 export default TrafficChart;

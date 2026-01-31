@@ -1,75 +1,64 @@
-import { Routes, Route } from "react-router-dom";
-import AppNavbar from "./components/Navbar";
-import DashboardLayout from "./components/DashboardLayout";
+import { Routes, Route, Navigate } from "react-router-dom";
+import { AnimatePresence } from "framer-motion";
+
 import ProtectedRoute from "./components/ProtectedRoute";
+import DashboardLayout from "./components/DashboardLayout";
+import AppNavbar from "./components/Navbar";
 
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import Dashboard from "./pages/Dashboard";
-
 
 import Traffic from "./pages/Traffic";
 import Incidents from "./pages/Incidents";
 import Violations from "./pages/Violations";
 
+import AdminDashboard from "./pages/dashboard/AdminDashboard";
+import OfficerDashboard from "./pages/dashboard/OfficerDashboard";
+import UserDashboard from "./pages/dashboard/UserDashboard";
 
 function App() {
   return (
-    <>
-      <AppNavbar />
-
+    <AnimatePresence mode="wait">
       <Routes>
-        <Route path="/" element={<Home />} />
+
+        {/* 🌐 Public Routes */}
+        <Route
+          path="/"
+          element={
+            <>
+              <AppNavbar />
+              <Home />
+            </>
+          }
+        />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
 
+        {/* 🔐 Protected Dashboard Routes */}
         <Route
-          path="/dashboard"
           element={
             <ProtectedRoute>
-              <DashboardLayout>
-                <Dashboard />
-              </DashboardLayout>
+              <DashboardLayout />
             </ProtectedRoute>
           }
-        />
-        <Route
-          path="/traffic"
-          element={
-            <ProtectedRoute>
-              <DashboardLayout>
-                <Traffic />
-              </DashboardLayout>
-            </ProtectedRoute>
-          }
-        />
+        >
+          {/* Role Dashboards */}
+          <Route path="/dashboard/admin" element={<AdminDashboard />} />
+          <Route path="/dashboard/officer" element={<OfficerDashboard />} />
+          <Route path="/dashboard/user" element={<UserDashboard />} />
 
-        <Route
-          path="/incidents"
-          element={
-            <ProtectedRoute>
-              <DashboardLayout>
-                <Incidents />
-              </DashboardLayout>
-            </ProtectedRoute>
-          }
-        />
+          {/* Common Pages */}
+          <Route path="/traffic" element={<Traffic />} />
+          <Route path="/incidents" element={<Incidents />} />
+          <Route path="/violations" element={<Violations />} />
+        </Route>
 
-        <Route
-          path="/violations"
-          element={
-            <ProtectedRoute>
-              <DashboardLayout>
-                <Violations />
-              </DashboardLayout>
-            </ProtectedRoute>
-          }
-        />
-
+        {/* ❌ Fallback */}
+        <Route path="*" element={<Navigate to="/" />} />
 
       </Routes>
-    </>
+    </AnimatePresence>
   );
 }
 

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Table } from "react-bootstrap";
-import { getTrafficList } from "../services/traffic";
+import { getLiveTraffic } from "../services/traffic";
 
 function Traffic() {
   const [traffic, setTraffic] = useState([]);
@@ -9,7 +9,7 @@ function Traffic() {
 
   useEffect(() => {
     const loadTraffic = async () => {
-      const data = await getTrafficList();
+      const data = await getLiveTraffic();
       setTraffic(data);
       setLoading(false);
     };

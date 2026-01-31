@@ -1,0 +1,64 @@
+/* ===============================
+   THEME VARIABLES
+================================ */
+
+/* LIGHT MODE (DEFAULT) */
+:root {
+  --bg-main: #f8fafc;
+  --bg-card: #ffffff;
+  --bg-sidebar: linear-gradient(180deg, #020617, #0f172a);
+
+  --text-main: #0f172a;
+  --text-muted: #6b7280;
+
+  --primary: #4f46e5;
+  --success: #22c55e;
+  --danger: #ef4444;
+  --warning: #facc15;
+
+  --radius: 16px;
+  --shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+/* DARK MODE */
+body.dark {
+  --bg-main: #0f172a;
+  --bg-card: #111827;
+  --bg-sidebar: linear-gradient(180deg, #020617, #020617);
+
+  --text-main: #f9fafb;
+  --text-muted: #9ca3af;
+
+  --primary: #38bdf8;
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+/* ===============================
+   GLOBAL
+================================ */
+
+body {
+  background: var(--bg-main);
+  color: var(--text-main);
+  font-family: "Inter", system-ui, sans-serif;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* Cards */
+.dashboard-section,
+.officer-card,
+.user-card,
+.sidebar,
+.dashboard-navbar {
+  background: var(--bg-card);
+  color: var(--text-main);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+/* Muted text */
+.dashboard-subtitle,
+.officer-card p,
+.user-card p {
+  color: var(--text-muted);
+}
